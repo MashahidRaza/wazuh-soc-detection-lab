@@ -2,30 +2,33 @@
 
 ## Overview
 
-A hands-on Security Operations Center (SOC) laboratory focused on
-endpoint monitoring, network threat detection, alert investigation,
+A hands-on Security Operations Center (SOC) laboratory built to
+practice security monitoring, threat detection, alert investigation,
 MITRE ATT&CK mapping, and incident response.
 
-## Technologies
+The project uses Wazuh as the central SIEM/XDR platform with
+Sysmon for Windows endpoint telemetry and Suricata for network
+threat detection.
 
-- Wazuh
-- Wazuh Dashboard
-- Sysmon
-- Suricata
-- Windows 11
-- Rocky Linux
-- Parrot OS
-- Nmap
-- MITRE ATT&CK
+## Lab Architecture
 
-## Objectives
-
-- Monitor Windows endpoint activity
-- Detect suspicious processes
-- Detect network reconnaissance
-- Monitor authentication activity
-- Correlate endpoint and network telemetry
-- Investigate security alerts
-- Map detections to MITRE ATT&CK
-- Build incident timelines
-- Produce SOC incident reports
+```text
+                    Parrot OS
+                 192.168.64.14
+                       |
+                       | Nmap / Network Traffic
+                       ↓
+                Windows 11 Endpoint
+                 192.168.64.12
+                     Sysmon
+                       |
+                       | Windows Events
+                       ↓
+                 Wazuh Server
+                  192.168.64.6
+                       |
+              ┌────────┴────────┐
+              ↓                 ↓
+          Wazuh SIEM        Suricata
+              ↓                 ↓
+          Dashboard       Network Alerts
